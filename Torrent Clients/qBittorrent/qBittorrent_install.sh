@@ -84,8 +84,10 @@ After=network.target
 [Service]
 Type=forking
 User=$username
+Environment=HOME=/home/$username
+WorkingDirectory=/home/$username
 LimitNOFILE=infinity
-ExecStart=/usr/bin/qbittorrent-nox -d
+ExecStart=/usr/bin/qbittorrent-nox -d --profile=/home/$username/.config/qBittorrent
 ExecStop=/usr/bin/killall -w -s 9 /usr/bin/qbittorrent-nox
 Restart=on-failure
 TimeoutStopSec=20
