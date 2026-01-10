@@ -1,7 +1,7 @@
 # Seedbox-Install-Components
 Components used for Seedbox Installation Script
-- https://github.com/i-abc/Dedicated-Seedbox
-- https://github.com/i-abc/Shared-Seedbox
+- https://github.com/bbilyvm/DedicatedSeedbox
+- https://github.com/bbilyvm/Shared-Seedbox
 
 ## Credit
 qBittorrent Install - https://github.com/userdocs/qbittorrent-nox-static

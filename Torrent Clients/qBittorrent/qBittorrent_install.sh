@@ -1,50 +1,68 @@
 function qBittorrent_download {
     need_input; echo "Please enter your choice (qBittorrent Version - libtorrent Version):"; normal_3
-    options=("qBittorrent 4.1.9 - libtorrent-1_1_14" "qBittorrent 4.1.9.1 - libtorrent-1_1_14" "qBittorrent 4.3.3 - libtorrent-v1.2.13" "qBittorrent 4.3.4.1 - libtorrent-v1.2.13" "qBittorrent 4.3.5 - libtorrent-v1.2.13" "qBittorrent 4.3.6 - libtorrent-v1.2.14" "qBittorrent 4.3.7 - libtorrent-v1.2.14" "qBittorrent 4.3.8 - libtorrent-v1.2.14" "qBittorrent 4.3.9 - libtorrent-v1.2.15" "qBittorrent 4.4.0beta2 - libtorrent-v2.0.4")
+    cd "$HOME" || exit 1
+    rm -rf "$HOME/qbittorrent-nox"
+    qb_base="https://media.githubusercontent.com/media/bbilyvm/DedicatedSeedbox/main/Torrent%20Clients/qBittorrent/qBittorrent"
+    options=("qBittorrent 4.1.9 - libtorrent-1_1_14" "qBittorrent 4.1.9.1 - libtorrent-1_1_14" "qBittorrent 4.2.5 - libtorrent-v1.2.20" "qBittorrent 4.3.3 - libtorrent-v1.2.13" "qBittorrent 4.3.4.1 - libtorrent-v1.2.13" "qBittorrent 4.3.5 - libtorrent-v1.2.13" "qBittorrent 4.3.6 - libtorrent-v1.2.14" "qBittorrent 4.3.7 - libtorrent-v1.2.14" "qBittorrent 4.3.8 - libtorrent-v1.2.14" "qBittorrent 4.3.9 - libtorrent-v1.2.15" "qBittorrent 4.4.0beta2 - libtorrent-v2.0.4")
     select opt in "${options[@]}"
     do
         case $opt in
             "qBittorrent 4.1.9 - libtorrent-1_1_14")
-                version=4.1.9; wget https://raw.githubusercontent.com/i-abc/Seedbox-Components/main/Torrent%20Clients/qBittorrent/qBittorrent/qBittorrent%204.1.9%20-%20libtorrent-1_1_14/qbittorrent-nox && chmod +x $HOME/qbittorrent-nox; break
+                version=4.1.9; wget -qO "$HOME/qbittorrent-nox" "$qb_base/qBittorrent%204.1.9%20-%20libtorrent-1_1_14/qbittorrent-nox" && chmod +x "$HOME/qbittorrent-nox"; break
                 ;;
             "qBittorrent 4.1.9.1 - libtorrent-1_1_14")
-                version=4.1.9.1; wget https://raw.githubusercontent.com/i-abc/Seedbox-Components/main/Torrent%20Clients/qBittorrent/qBittorrent/qBittorrent%204.1.9.1%20-%20libtorrent-1_1_14/qbittorrent-nox && chmod +x $HOME/qbittorrent-nox; break
+                version=4.1.9.1; wget -qO "$HOME/qbittorrent-nox" "$qb_base/qBittorrent%204.1.9.1%20-%20libtorrent-1_1_14/qbittorrent-nox" && chmod +x "$HOME/qbittorrent-nox"; break
+                ;;
+            "qBittorrent 4.2.5 - libtorrent-v1.2.20")
+                version=4.2.5; wget -qO "$HOME/qbittorrent-nox" "$qb_base/qBittorrent%204.2.5%20-%20libtorrent-v1.2.20/qbittorrent-nox" && chmod +x "$HOME/qbittorrent-nox"; break
                 ;;
             "qBittorrent 4.3.3 - libtorrent-v1.2.13")
-                version=4.3.3; wget https://raw.githubusercontent.com/i-abc/Seedbox-Components/main/Torrent%20Clients/qBittorrent/qBittorrent/qBittorrent%204.3.3%20-%20libtorrent-v1.2.13/qbittorrent-nox && chmod +x $HOME/qbittorrent-nox; break
+                version=4.3.3; wget -qO "$HOME/qbittorrent-nox" "$qb_base/qBittorrent%204.3.3%20-%20libtorrent-v1.2.13/qbittorrent-nox" && chmod +x "$HOME/qbittorrent-nox"; break
                 ;;
             "qBittorrent 4.3.4.1 - libtorrent-v1.2.13")
-                version=4.3.4.1; wget https://raw.githubusercontent.com/i-abc/Seedbox-Components/main/Torrent%20Clients/qBittorrent/qBittorrent/qBittorrent%204.3.4.1%20-%20libtorrent-v1.2.13/qbittorrent-nox && chmod +x $HOME/qbittorrent-nox; break
+                version=4.3.4.1; wget -qO "$HOME/qbittorrent-nox" "$qb_base/qBittorrent%204.3.4.1%20-%20libtorrent-v1.2.13/qbittorrent-nox" && chmod +x "$HOME/qbittorrent-nox"; break
                 ;;
             "qBittorrent 4.3.5 - libtorrent-v1.2.13")
-                version=4.3.5; wget https://raw.githubusercontent.com/i-abc/Seedbox-Components/main/Torrent%20Clients/qBittorrent/qBittorrent/qBittorrent%204.3.5%20-%20libtorrent-v1.2.13/qbittorrent-nox && chmod +x $HOME/qbittorrent-nox; break
+                version=4.3.5; wget -qO "$HOME/qbittorrent-nox" "$qb_base/qBittorrent%204.3.5%20-%20libtorrent-v1.2.13/qbittorrent-nox" && chmod +x "$HOME/qbittorrent-nox"; break
                 ;;
             "qBittorrent 4.3.6 - libtorrent-v1.2.14")
-                version=4.3.6; wget https://raw.githubusercontent.com/i-abc/Seedbox-Components/main/Torrent%20Clients/qBittorrent/qBittorrent/qBittorrent%204.3.6%20-%20libtorrent-v1.2.14/qbittorrent-nox && chmod +x $HOME/qbittorrent-nox; break
+                version=4.3.6; wget -qO "$HOME/qbittorrent-nox" "$qb_base/qBittorrent%204.3.6%20-%20libtorrent-v1.2.14/qbittorrent-nox" && chmod +x "$HOME/qbittorrent-nox"; break
                 ;;
             "qBittorrent 4.3.7 - libtorrent-v1.2.14")
-                version=4.3.7; wget https://raw.githubusercontent.com/i-abc/Seedbox-Components/main/Torrent%20Clients/qBittorrent/qBittorrent/qBittorrent%204.3.7%20-%20libtorrent-v1.2.14/qbittorrent-nox && chmod +x $HOME/qbittorrent-nox; break
+                version=4.3.7; wget -qO "$HOME/qbittorrent-nox" "$qb_base/qBittorrent%204.3.7%20-%20libtorrent-v1.2.14/qbittorrent-nox" && chmod +x "$HOME/qbittorrent-nox"; break
                 ;;
             "qBittorrent 4.3.8 - libtorrent-v1.2.14")
-                version=4.3.8; wget https://raw.githubusercontent.com/i-abc/Seedbox-Components/main/Torrent%20Clients/qBittorrent/qBittorrent/qBittorrent%204.3.8%20-%20libtorrent-v1.2.14/qbittorrent-nox && chmod +x $HOME/qbittorrent-nox; break
+                version=4.3.8; wget -qO "$HOME/qbittorrent-nox" "$qb_base/qBittorrent%204.3.8%20-%20libtorrent-v1.2.14/qbittorrent-nox" && chmod +x "$HOME/qbittorrent-nox"; break
                 ;;
             "qBittorrent 4.3.9 - libtorrent-v1.2.15")
-                version=4.3.9; wget https://raw.githubusercontent.com/i-abc/Seedbox-Components/main/Torrent%20Clients/qBittorrent/qBittorrent/qBittorrent%204.3.9%20-%20libtorrent-v1.2.15/qbittorrent-nox && chmod +x $HOME/qbittorrent-nox; break
+                version=4.3.9; wget -qO "$HOME/qbittorrent-nox" "$qb_base/qBittorrent%204.3.9%20-%20libtorrent-v1.2.15/qbittorrent-nox" && chmod +x "$HOME/qbittorrent-nox"; break
                 ;;
             "qBittorrent 4.4.0beta2 - libtorrent-v2.0.4")
-                version=4.4.0; wget https://raw.githubusercontent.com/i-abc/Seedbox-Components/main/Torrent%20Clients/qBittorrent/qBittorrent/qBittorrent%204.4.0beta2%20-%20libtorrent-v2.0.4/qbittorrent-nox && chmod +x $HOME/qbittorrent-nox; break
+                version=4.4.0; wget -qO "$HOME/qbittorrent-nox" "$qb_base/qBittorrent%204.4.0beta2%20-%20libtorrent-v2.0.4/qbittorrent-nox" && chmod +x "$HOME/qbittorrent-nox"; break
                 ;;
             *) warn_1; echo "Please choose a valid version"; normal_3;;
         esac
     done
+    if grep -q "git-lfs" "$HOME/qbittorrent-nox"; then
+        warn_1; echo "qBittorrent binary is stored in Git LFS but not available. Upload binaries or use GitHub releases."; normal_4
+        exit 1
+    fi
+    if [ ! -s "$HOME/qbittorrent-nox" ]; then
+        warn_1; echo "qBittorrent download failed"; normal_4
+        exit 1
+    fi
 }
 
 function qBittorrent_install {
     normal_2
     ## Shut down qBittorrent if it has been already installed
     pgrep -i -f qbittorrent && pkill -s $(pgrep -i -f qbittorrent)
+    if [ ! -x "$HOME/qbittorrent-nox" ]; then
+        warn_1; echo "qBittorrent binary is missing or not executable"; normal_4
+        exit 1
+    fi
     test -e /usr/bin/qbittorrent-nox && rm /usr/bin/qbittorrent-nox
-    mv $HOME/qbittorrent-nox /usr/bin/qbittorrent-nox
+    install -m 755 "$HOME/qbittorrent-nox" /usr/bin/qbittorrent-nox
     ## Creating systemd services
     test -e /etc/systemd/system/qbittorrent-nox@.service && rm /etc/systemd/system/qbittorrent-nox@.service
     touch /etc/systemd/system/qbittorrent-nox@.service
@@ -93,7 +111,7 @@ WebUI\Port=8080
 WebUI\Username=$username
 EOF
     elif [[ "${version}" =~ "4.2."|"4.3."|"4.4." ]]; then
-        wget  https://raw.githubusercontent.com/i-abc/Seedbox-Components/main/Torrent%20Clients/qBittorrent/qb_password_gen && chmod +x $HOME/qb_password_gen
+        wget  https://raw.githubusercontent.com/bbilyvm/DedicatedSeedbox/main/Torrent%20Clients/qBittorrent/qb_password_gen && chmod +x $HOME/qb_password_gen
         PBKDF2password=$($HOME/qb_password_gen $password)
         cat << EOF >/home/$username/.config/qBittorrent/qBittorrent.conf
 [LegalNotice]
