@@ -13,7 +13,7 @@ function Update {
 ## qBittorrent
 function qBittorrent {
     warn_2
-    source <(wget -qO- https://raw.githubusercontent.com/i-abc/Seedbox-Components/main/Torrent%20Clients/qBittorrent/qBittorrent_install.sh)
+    source <(wget -qO- https://raw.githubusercontent.com/bbilyvm/DedicatedSeedbox/main/Torrent%20Clients/qBittorrent/qBittorrent_install.sh)
     qBittorrent_download
     qBittorrent_install
     qBittorrent_config
@@ -24,7 +24,7 @@ function qBittorrent {
 ## Deluge
 function Deluge {
     warn_2
-    source <(wget -qO- https://raw.githubusercontent.com/i-abc/Seedbox-Components/main/Torrent%20Clients/Deluge/Deluge_install.sh)
+    source <(wget -qO- https://raw.githubusercontent.com/bbilyvm/DedicatedSeedbox/main/Torrent%20Clients/Deluge/Deluge_install.sh)
     Deluge_download
     Deluge_install
     Deluge_config
