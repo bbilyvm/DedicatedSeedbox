@@ -51,18 +51,28 @@ function qBittorrent_download {
         warn_1; echo "qBittorrent download failed"; normal_4
         exit 1
     fi
+    if ! file "$HOME/qbittorrent-nox" | grep -q "ELF"; then
+        warn_1; echo "qBittorrent download is not an ELF binary"; normal_4
+        file "$HOME/qbittorrent-nox"
+        exit 1
+    fi
+    if [ "$(stat -c%s "$HOME/qbittorrent-nox")" -lt 1000000 ]; then
+        warn_1; echo "qBittorrent binary size is too small"; normal_4
+        exit 1
+    fi
 }
 
 function qBittorrent_install {
     normal_2
     ## Shut down qBittorrent if it has been already installed
     pgrep -i -f qbittorrent && pkill -s $(pgrep -i -f qbittorrent)
-    if [ ! -x "$HOME/qbittorrent-nox" ]; then
-        warn_1; echo "qBittorrent binary is missing or not executable"; normal_4
-        exit 1
-    fi
     test -e /usr/bin/qbittorrent-nox && rm /usr/bin/qbittorrent-nox
     install -m 755 "$HOME/qbittorrent-nox" /usr/bin/qbittorrent-nox
+    if ! /usr/bin/qbittorrent-nox --version >/dev/null 2>&1; then
+        warn_1; echo "qBittorrent binary failed to execute"; normal_4
+        ldd /usr/bin/qbittorrent-nox || true
+        exit 1
+    fi
     ## Creating systemd services
     test -e /etc/systemd/system/qbittorrent-nox@.service && rm /etc/systemd/system/qbittorrent-nox@.service
     touch /etc/systemd/system/qbittorrent-nox@.service
