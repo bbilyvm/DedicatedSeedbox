@@ -96,6 +96,10 @@ tput sgr0; clear
 
 normal_1; echo "Seedbox Installation Complete"
 publicip=$(curl https://ipinfo.io/ip)
-[[ ! -z "$qbport" ]] && echo "qBittorrent $version is successfully installed, visit at $publicip:$qbport"
+if [[ ! -z "$qbport" ]]; then
+    echo "qBittorrent $version is successfully installed, visit at $publicip:$qbport"
+else
+    echo "qBittorrent $version did not start successfully. Run: systemctl status qbittorrent-nox@$username"
+fi
 [[ ! -z "$deport" ]] && echo "Deluge $Deluge_Ver is successfully installed, visit at $publicip:$dewebport"
 [[ ! -z "$bbrx" ]] && echo "Tweaked BBR is successfully installed, please reboot for it to take effect"
