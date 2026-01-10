@@ -473,8 +473,14 @@ function Tweaked_BBR {
     elif [[ $distro_codename = bullseye ]]; then
     echo "deb http://deb.debian.org/debian bullseye-backports main" | sudo tee -a /etc/apt/sources.list
     apt-get -qqy update && apt -qqyt bullseye-backports upgrade
+    elif [[ $distro_codename = bookworm ]]; then
+    echo "deb http://deb.debian.org/debian bookworm-backports main" | sudo tee -a /etc/apt/sources.list
+    apt-get -qqy update && apt -qqyt bookworm-backports upgrade
+    elif [[ $distro_codename = trixie ]]; then
+    echo "deb http://deb.debian.org/debian trixie-backports main" | sudo tee -a /etc/apt/sources.list
+    apt-get -qqy update && apt -qqyt trixie-backports upgrade
     fi
-    wget https://raw.githubusercontent.com/i-abc/Seedbox-Components/main/Miscellaneous/BBR/BBR.sh && chmod +x BBR.sh
+    wget https://raw.githubusercontent.com/bbilyvm/DedicatedSeedbox/main/Miscellaneous/BBR/BBR.sh && chmod +x BBR.sh
     ## Install tweaked BBR automatically on reboot
     cat << EOF > /etc/systemd/system/bbrinstall.service
 [Unit]
@@ -561,4 +567,3 @@ function Deluge_libtorrent {
 EOF
     systemctl start deluged@$username
 }
-
