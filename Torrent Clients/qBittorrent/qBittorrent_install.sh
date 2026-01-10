@@ -39,14 +39,22 @@ function qBittorrent_download {
             *) warn_1; echo "Please choose a valid version"; normal_3;;
         esac
     done
+    if [ ! -s "$HOME/qbittorrent-nox" ]; then
+        warn_1; echo "qBittorrent download failed"; normal_4
+        exit 1
+    fi
 }
 
 function qBittorrent_install {
     normal_2
     ## Shut down qBittorrent if it has been already installed
     pgrep -i -f qbittorrent && pkill -s $(pgrep -i -f qbittorrent)
+    if [ ! -x "$HOME/qbittorrent-nox" ]; then
+        warn_1; echo "qBittorrent binary is missing or not executable"; normal_4
+        exit 1
+    fi
     test -e /usr/bin/qbittorrent-nox && rm /usr/bin/qbittorrent-nox
-    mv $HOME/qbittorrent-nox /usr/bin/qbittorrent-nox
+    install -m 755 "$HOME/qbittorrent-nox" /usr/bin/qbittorrent-nox
     ## Creating systemd services
     test -e /etc/systemd/system/qbittorrent-nox@.service && rm /etc/systemd/system/qbittorrent-nox@.service
     touch /etc/systemd/system/qbittorrent-nox@.service
