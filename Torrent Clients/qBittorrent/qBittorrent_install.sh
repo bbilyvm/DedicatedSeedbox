@@ -199,10 +199,27 @@ function qBittorrent_config {
     function set_pref {
         key="$1"
         value="$2"
-        if grep -q "^${key}=" "$config_path"; then
-            sed -i "s#^${key}=.*#${key}=${value}#" "$config_path"
+        if grep -Fq "${key}=" "$config_path"; then
+            awk -v key="$key" -v value="$value" '
+                index($0, key "=") == 1 {print key "=" value; next}
+                {print}
+            ' "$config_path" > "${config_path}.tmp" && mv "${config_path}.tmp" "$config_path"
         else
-            sed -i "/^\\[Preferences\\]/a ${key}=${value}" "$config_path"
+            awk -v key="$key" -v value="$value" '
+                $0 ~ /^\[Preferences\]/ {
+                    print
+                    print key "=" value
+                    inserted=1
+                    next
+                }
+                {print}
+                END {
+                    if (!inserted) {
+                        print "[Preferences]"
+                        print key "=" value
+                    }
+                }
+            ' "$config_path" > "${config_path}.tmp" && mv "${config_path}.tmp" "$config_path"
         fi
     }
 
