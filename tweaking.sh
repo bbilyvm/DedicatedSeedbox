@@ -43,11 +43,20 @@ function Network_Other_Tweaking {
     normal_1; echo "Doing other Network Tweaking"; warn_2
     #Other 1
     apt-get -qqy install net-tools
+    if [ -z "$interface" ]; then
+        interface=$(ip -o -4 route show to default | awk '{print $5}' | head -n 1)
+    fi
     ifconfig $interface txqueuelen 10000
     sleep 1
     #Other 2
-    iproute=$(ip -o -4 route show to default)
-    ip route change $iproute initcwnd 25 initrwnd 25
+    default_route=$(ip -o -4 route show to default | head -n 1)
+    if echo "$default_route" | grep -q " via "; then
+        gateway=$(echo "$default_route" | awk '{print $3}')
+        device=$(echo "$default_route" | awk '{print $5}')
+        ip route replace default via "$gateway" dev "$device" initcwnd 25 initrwnd 25
+    elif [ -n "$interface" ]; then
+        ip route replace default dev "$interface" initcwnd 25 initrwnd 25
+    fi
 }
 
 
@@ -55,36 +64,19 @@ function Network_Other_Tweaking {
 #Scheduler
 function Scheduler_Tweaking {
     normal_1; echo "Changing I/O Scheduler"; warn_2
-    i=1
-    drive=()
-    disk=$(lsblk -nd --output NAME)
-    diskno=$(echo $disk | awk '{print NF}')
-    while [ $i -le $diskno ]
-    do
-	    device=$(echo $disk | awk -v i=$i '{print $i}')
-	    drive+=($device)
-	    i=$(( $i + 1 ))
+    for diskname in $(lsblk -nd --output NAME); do
+        rotational_file="/sys/block/$diskname/queue/rotational"
+        scheduler_file="/sys/block/$diskname/queue/scheduler"
+        if [ ! -r "$rotational_file" ] || [ ! -w "$scheduler_file" ]; then
+            continue
+        fi
+        disktype=$(cat "$rotational_file")
+        if [ "${disktype}" == 0 ]; then
+            echo kyber > "$scheduler_file"
+        else
+            echo mq-deadline > "$scheduler_file"
+        fi
     done
-    i=1
-    x=0
-    disktype=$(cat /sys/block/sda/queue/rotational)
-    if [ "${disktype}" == 0 ]; then
-	    while [ $i -le $diskno ]
-	    do
-		    diskname=$(eval echo ${drive["$x"]})
-		    echo kyber > /sys/block/$diskname/queue/scheduler
-		    i=$(( $i + 1 ))
-		    x=$(( $x + 1 ))
-	    done
-    else
-	    while [ $i -le $diskno ]
-	    do
-		    diskname=$(eval echo ${drive["$x"]})
-		    echo mq-deadline > /sys/block/$diskname/queue/scheduler
-		    i=$(( $i + 1 ))
-		    x=$(( $x + 1 ))
-	    done
-    fi
 }
 
 
