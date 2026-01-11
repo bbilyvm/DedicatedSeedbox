@@ -220,13 +220,17 @@ function qBittorrent_config {
         wget  https://raw.githubusercontent.com/bbilyvm/DedicatedSeedbox/main/Torrent%20Clients/qBittorrent/qb_password_gen && chmod +x $HOME/qb_password_gen
         PBKDF2password=$($HOME/qb_password_gen $password)
         md5password=$(printf "%s:Web UI Access:%s" "$username" "$password" | md5sum | awk '{print $1}')
-        set_pref "WebUI\\Password_PBKDF2" "\"@ByteArray($PBKDF2password)\""
+        set_pref "WebUI\\Password_PBKDF2" "@ByteArray($PBKDF2password)"
         set_pref "WebUI\\Password_ha1" "@ByteArray($md5password)"
         rm -f $HOME/qb_password_gen
     fi
 
-    cp "$config_path" "$config_main"
-    cp "$config_path" "$config_profile"
+    if [ "$config_path" != "$config_main" ]; then
+        cp "$config_path" "$config_main"
+    fi
+    if [ "$config_path" != "$config_profile" ]; then
+        cp "$config_path" "$config_profile"
+    fi
     chown $username "$config_main" "$config_profile"
     systemctl start qbittorrent-nox@$username
 }
