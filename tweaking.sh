@@ -43,11 +43,20 @@ function Network_Other_Tweaking {
     normal_1; echo "Doing other Network Tweaking"; warn_2
     #Other 1
     apt-get -qqy install net-tools
+    if [ -z "$interface" ]; then
+        interface=$(ip -o -4 route show to default | awk '{print $5}' | head -n 1)
+    fi
     ifconfig $interface txqueuelen 10000
     sleep 1
     #Other 2
-    iproute=$(ip -o -4 route show to default)
-    ip route change $iproute initcwnd 25 initrwnd 25
+    default_route=$(ip -o -4 route show to default | head -n 1)
+    if echo "$default_route" | grep -q " via "; then
+        gateway=$(echo "$default_route" | awk '{print $3}')
+        device=$(echo "$default_route" | awk '{print $5}')
+        ip route replace default via "$gateway" dev "$device" initcwnd 25 initrwnd 25
+    elif [ -n "$interface" ]; then
+        ip route replace default dev "$interface" initcwnd 25 initrwnd 25
+    fi
 }
 
 
@@ -55,36 +64,19 @@ function Network_Other_Tweaking {
 #Scheduler
 function Scheduler_Tweaking {
     normal_1; echo "Changing I/O Scheduler"; warn_2
-    i=1
-    drive=()
-    disk=$(lsblk -nd --output NAME)
-    diskno=$(echo $disk | awk '{print NF}')
-    while [ $i -le $diskno ]
-    do
-	    device=$(echo $disk | awk -v i=$i '{print $i}')
-	    drive+=($device)
-	    i=$(( $i + 1 ))
+    for diskname in $(lsblk -nd --output NAME); do
+        rotational_file="/sys/block/$diskname/queue/rotational"
+        scheduler_file="/sys/block/$diskname/queue/scheduler"
+        if [ ! -r "$rotational_file" ] || [ ! -w "$scheduler_file" ]; then
+            continue
+        fi
+        disktype=$(cat "$rotational_file")
+        if [ "${disktype}" == 0 ]; then
+            echo kyber > "$scheduler_file"
+        else
+            echo mq-deadline > "$scheduler_file"
+        fi
     done
-    i=1
-    x=0
-    disktype=$(cat /sys/block/sda/queue/rotational)
-    if [ "${disktype}" == 0 ]; then
-	    while [ $i -le $diskno ]
-	    do
-		    diskname=$(eval echo ${drive["$x"]})
-		    echo kyber > /sys/block/$diskname/queue/scheduler
-		    i=$(( $i + 1 ))
-		    x=$(( $x + 1 ))
-	    done
-    else
-	    while [ $i -le $diskno ]
-	    do
-		    diskname=$(eval echo ${drive["$x"]})
-		    echo mq-deadline > /sys/block/$diskname/queue/scheduler
-		    i=$(( $i + 1 ))
-		    x=$(( $x + 1 ))
-	    done
-    fi
 }
 
 
@@ -458,6 +450,12 @@ net.ipv4.tcp_limit_output_bytes = 3276800
 net.core.default_qdisc = fq
 net.ipv4.tcp_congestion_control = bbr
 EOF
+    for key in kernel.sched_migration_cost_ns kernel.sched_min_granularity_ns kernel.sched_wakeup_granularity_ns; do
+        path="/proc/sys/${key//./\/}"
+        if [ ! -e "$path" ]; then
+            sed -i "/^${key//./\\.} =/d" /etc/sysctl.conf
+        fi
+    done
     sysctl -p > /dev/null
 }
 
@@ -469,16 +467,16 @@ function Tweaked_BBR {
     distro_codename="$(source /etc/os-release && printf "%s" "${VERSION_CODENAME}")"
     if [[ $distro_codename = buster ]]; then
     echo "deb http://deb.debian.org/debian buster-backports main" | sudo tee -a /etc/apt/sources.list
-    apt-get -qqy update && apt -qqyt buster-backports upgrade
+    apt-get $APT_OPTIONS -qqy update && apt-get $APT_OPTIONS -qqyt buster-backports upgrade
     elif [[ $distro_codename = bullseye ]]; then
     echo "deb http://deb.debian.org/debian bullseye-backports main" | sudo tee -a /etc/apt/sources.list
-    apt-get -qqy update && apt -qqyt bullseye-backports upgrade
+    apt-get $APT_OPTIONS -qqy update && apt-get $APT_OPTIONS -qqyt bullseye-backports upgrade
     elif [[ $distro_codename = bookworm ]]; then
     echo "deb http://deb.debian.org/debian bookworm-backports main" | sudo tee -a /etc/apt/sources.list
-    apt-get -qqy update && apt -qqyt bookworm-backports upgrade
+    apt-get $APT_OPTIONS -qqy update && apt-get $APT_OPTIONS -qqyt bookworm-backports upgrade
     elif [[ $distro_codename = trixie ]]; then
     echo "deb http://deb.debian.org/debian trixie-backports main" | sudo tee -a /etc/apt/sources.list
-    apt-get -qqy update && apt -qqyt trixie-backports upgrade
+    apt-get $APT_OPTIONS -qqy update && apt-get $APT_OPTIONS -qqyt trixie-backports upgrade
     fi
     wget https://raw.githubusercontent.com/bbilyvm/DedicatedSeedbox/main/Miscellaneous/BBR/BBR.sh && chmod +x BBR.sh
     ## Install tweaked BBR automatically on reboot
