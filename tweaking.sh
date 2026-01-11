@@ -450,6 +450,12 @@ net.ipv4.tcp_limit_output_bytes = 3276800
 net.core.default_qdisc = fq
 net.ipv4.tcp_congestion_control = bbr
 EOF
+    for key in kernel.sched_migration_cost_ns kernel.sched_min_granularity_ns kernel.sched_wakeup_granularity_ns; do
+        path="/proc/sys/${key//./\/}"
+        if [ ! -e "$path" ]; then
+            sed -i "/^${key//./\\.} =/d" /etc/sysctl.conf
+        fi
+    done
     sysctl -p > /dev/null
 }
 
@@ -461,16 +467,16 @@ function Tweaked_BBR {
     distro_codename="$(source /etc/os-release && printf "%s" "${VERSION_CODENAME}")"
     if [[ $distro_codename = buster ]]; then
     echo "deb http://deb.debian.org/debian buster-backports main" | sudo tee -a /etc/apt/sources.list
-    apt-get -qqy update && apt -qqyt buster-backports upgrade
+    apt-get $APT_OPTIONS -qqy update && apt-get $APT_OPTIONS -qqyt buster-backports upgrade
     elif [[ $distro_codename = bullseye ]]; then
     echo "deb http://deb.debian.org/debian bullseye-backports main" | sudo tee -a /etc/apt/sources.list
-    apt-get -qqy update && apt -qqyt bullseye-backports upgrade
+    apt-get $APT_OPTIONS -qqy update && apt-get $APT_OPTIONS -qqyt bullseye-backports upgrade
     elif [[ $distro_codename = bookworm ]]; then
     echo "deb http://deb.debian.org/debian bookworm-backports main" | sudo tee -a /etc/apt/sources.list
-    apt-get -qqy update && apt -qqyt bookworm-backports upgrade
+    apt-get $APT_OPTIONS -qqy update && apt-get $APT_OPTIONS -qqyt bookworm-backports upgrade
     elif [[ $distro_codename = trixie ]]; then
     echo "deb http://deb.debian.org/debian trixie-backports main" | sudo tee -a /etc/apt/sources.list
-    apt-get -qqy update && apt -qqyt trixie-backports upgrade
+    apt-get $APT_OPTIONS -qqy update && apt-get $APT_OPTIONS -qqyt trixie-backports upgrade
     fi
     wget https://raw.githubusercontent.com/bbilyvm/DedicatedSeedbox/main/Miscellaneous/BBR/BBR.sh && chmod +x BBR.sh
     ## Install tweaked BBR automatically on reboot

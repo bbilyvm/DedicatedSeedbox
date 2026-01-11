@@ -173,11 +173,11 @@ EOF
     mkdir -p /home/$username/qbittorrent/Downloads && chown $username /home/$username/qbittorrent/Downloads
     mkdir -p /home/$username/.config/qBittorrent && chown $username /home/$username/.config/qBittorrent
     systemctl enable qbittorrent-nox@$username
-    systemctl start qbittorrent-nox@$username
 }
 
 function qBittorrent_config {
     systemctl stop qbittorrent-nox@$username
+    mkdir -p /home/$username/.config/qBittorrent && chown $username /home/$username/.config/qBittorrent
     rm -f /home/$username/.config/qBittorrent/qBittorrent.conf
     if [[ "${version}" =~ "4.1." ]]; then
         md5password=$(echo -n $password | md5sum | awk '{print $1}')

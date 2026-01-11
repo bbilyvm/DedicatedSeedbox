@@ -4,8 +4,8 @@
 function Update {
     normal_1; echo "Updating installed packages and install prerequisite"
     normal_2
-    apt-get -qqy update && apt-get -qqy upgrade
-    apt-get -qqy install sudo sysstat htop curl psmisc
+    apt-get $APT_OPTIONS -qqy update && apt-get $APT_OPTIONS -qqy upgrade
+    apt-get $APT_OPTIONS -qqy install sudo sysstat htop curl psmisc
     cd $HOME
     tput sgr0; clear
 }

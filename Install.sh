@@ -11,6 +11,9 @@ if [ $(id -u) -ne 0 ]; then
     exit 1 
 fi
 
+export DEBIAN_FRONTEND=noninteractive
+export APT_OPTIONS="-o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confold"
+
 ## Check Linux Distro
 distro_codename="$(source /etc/os-release && printf "%s" "${VERSION_CODENAME}")"
 if [[ $distro_codename != buster ]] && [[ $distro_codename != bullseye ]] && [[ $distro_codename != bookworm ]] && [[ $distro_codename != trixie ]] ; then
