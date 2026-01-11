@@ -177,11 +177,11 @@ EOF
 
 function qBittorrent_config {
     systemctl stop qbittorrent-nox@$username
-    mkdir -p /home/$username/.config/qBittorrent && chown $username /home/$username/.config/qBittorrent
-    rm -f /home/$username/.config/qBittorrent/qBittorrent.conf
+    mkdir -p /home/$username/.config/qBittorrent/config && chown -R $username /home/$username/.config/qBittorrent
+    rm -f /home/$username/.config/qBittorrent/qBittorrent.conf /home/$username/.config/qBittorrent/config/qBittorrent.conf
     if [[ "${version}" =~ "4.1." ]]; then
         md5password=$(printf "%s:Web UI Access:%s" "$username" "$password" | md5sum | awk '{print $1}')
-        cat << EOF >/home/$username/.config/qBittorrent/qBittorrent.conf
+        cat << EOF >/home/$username/.config/qBittorrent/config/qBittorrent.conf
 [LegalNotice]
 Accepted=true
 
@@ -201,7 +201,7 @@ EOF
         wget  https://raw.githubusercontent.com/bbilyvm/DedicatedSeedbox/main/Torrent%20Clients/qBittorrent/qb_password_gen && chmod +x $HOME/qb_password_gen
         PBKDF2password=$($HOME/qb_password_gen $password)
         md5password=$(printf "%s:Web UI Access:%s" "$username" "$password" | md5sum | awk '{print $1}')
-        cat << EOF >/home/$username/.config/qBittorrent/qBittorrent.conf
+        cat << EOF >/home/$username/.config/qBittorrent/config/qBittorrent.conf
 [LegalNotice]
 Accepted=true
 
@@ -220,6 +220,6 @@ WebUI\Username=$username
 EOF
     rm -f $HOME/qb_password_gen
     fi
-    chown $username /home/$username/.config/qBittorrent/qBittorrent.conf
+    chown $username /home/$username/.config/qBittorrent/config/qBittorrent.conf
     systemctl start qbittorrent-nox@$username
 }
