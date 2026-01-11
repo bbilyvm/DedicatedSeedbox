@@ -13,18 +13,23 @@ function Update {
 ## qBittorrent
 function qBittorrent {
     warn_2
-    source <(wget -qO- https://raw.githubusercontent.com/i-abc/Seedbox-Components/main/Torrent%20Clients/qBittorrent/qBittorrent_install.sh)
+    source <(wget -qO- https://raw.githubusercontent.com/bbilyvm/DedicatedSeedbox/main/Torrent%20Clients/qBittorrent/qBittorrent_install.sh)
     qBittorrent_download
     qBittorrent_install
     qBittorrent_config
-    qbport=$(grep -F 'WebUI\Port'  /home/$username/.config/qBittorrent/qBittorrent.conf | grep -Eo '[0-9]{1,5}')
+    if systemctl is-active --quiet qbittorrent-nox@$username; then
+        qbport=$(grep -F 'WebUI\Port'  /home/$username/.config/qBittorrent/qBittorrent.conf | grep -Eo '[0-9]{1,5}')
+    else
+        warn_1; echo "qBittorrent service failed to start. Check: systemctl status qbittorrent-nox@$username"; normal_4
+        unset qbport
+    fi
     tput sgr0; clear
 }
 
 ## Deluge
 function Deluge {
     warn_2
-    source <(wget -qO- https://raw.githubusercontent.com/i-abc/Seedbox-Components/main/Torrent%20Clients/Deluge/Deluge_install.sh)
+    source <(wget -qO- https://raw.githubusercontent.com/bbilyvm/DedicatedSeedbox/main/Torrent%20Clients/Deluge/Deluge_install.sh)
     Deluge_download
     Deluge_install
     Deluge_config
