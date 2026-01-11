@@ -139,6 +139,10 @@ function qBittorrent_install {
     normal_2
     ## Shut down qBittorrent if it has been already installed
     pgrep -i -f qbittorrent && pkill -s $(pgrep -i -f qbittorrent)
+    if [ ! -x "$HOME/qbittorrent-nox" ]; then
+        warn_1; echo "qBittorrent binary is missing or not executable"; normal_4
+        exit 1
+    fi
     test -e /usr/bin/qbittorrent-nox && rm /usr/bin/qbittorrent-nox
     install -m 755 "$HOME/qbittorrent-nox" /usr/bin/qbittorrent-nox
     if ! /usr/bin/qbittorrent-nox --version >/dev/null 2>&1; then
