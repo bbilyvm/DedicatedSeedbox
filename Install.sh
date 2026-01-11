@@ -71,8 +71,6 @@ normal_1; echo "Start Installing Seedbox Environment"; warn_2
 source <(wget -qO- https://raw.githubusercontent.com/bbilyvm/DedicatedSeedbox/main/seedbox_installation.sh)
 Update
 Decision qBittorrent
-Decision Deluge
-Decision autoremove-torrents
 
 
 ## Tweaking
@@ -101,5 +99,4 @@ if [[ ! -z "$qbport" ]]; then
 else
     echo "qBittorrent $version did not start successfully. Run: systemctl status qbittorrent-nox@$username"
 fi
-[[ ! -z "$deport" ]] && echo "Deluge $Deluge_Ver is successfully installed, visit at $publicip:$dewebport"
 [[ ! -z "$bbrx" ]] && echo "Tweaked BBR is successfully installed, please reboot for it to take effect"
