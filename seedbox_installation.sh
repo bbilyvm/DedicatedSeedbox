@@ -18,7 +18,7 @@ function qBittorrent {
     qBittorrent_install
     qBittorrent_config
     if systemctl is-active --quiet qbittorrent-nox@$username; then
-        qbport=$(grep -F 'WebUI\Port'  /home/$username/.config/qBittorrent/qBittorrent.conf | grep -Eo '[0-9]{1,5}')
+        qbport=$(grep -F 'WebUI\Port' /home/$username/.config/qBittorrent/config/qBittorrent.conf | grep -Eo '[0-9]{1,5}')
     else
         warn_1; echo "qBittorrent service failed to start. Check: systemctl status qbittorrent-nox@$username"; normal_4
         unset qbport
