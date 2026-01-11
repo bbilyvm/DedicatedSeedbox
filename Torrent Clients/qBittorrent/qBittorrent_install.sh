@@ -177,11 +177,14 @@ EOF
 
 function qBittorrent_config {
     systemctl stop qbittorrent-nox@$username
-    mkdir -p /home/$username/.config/qBittorrent/config && chown -R $username /home/$username/.config/qBittorrent
-    rm -f /home/$username/.config/qBittorrent/qBittorrent.conf /home/$username/.config/qBittorrent/config/qBittorrent.conf
+    config_base="/home/$username/.config/qBittorrent"
+    config_main="${config_base}/qBittorrent.conf"
+    config_profile="${config_base}/config/qBittorrent.conf"
+    mkdir -p "${config_base}/config" && chown -R $username "$config_base"
+    rm -f "$config_main" "$config_profile"
     if [[ "${version}" =~ "4.1." ]]; then
         md5password=$(printf "%s:Web UI Access:%s" "$username" "$password" | md5sum | awk '{print $1}')
-        cat << EOF >/home/$username/.config/qBittorrent/config/qBittorrent.conf
+        cat << EOF >"$config_main"
 [LegalNotice]
 Accepted=true
 
@@ -201,7 +204,7 @@ EOF
         wget  https://raw.githubusercontent.com/bbilyvm/DedicatedSeedbox/main/Torrent%20Clients/qBittorrent/qb_password_gen && chmod +x $HOME/qb_password_gen
         PBKDF2password=$($HOME/qb_password_gen $password)
         md5password=$(printf "%s:Web UI Access:%s" "$username" "$password" | md5sum | awk '{print $1}')
-        cat << EOF >/home/$username/.config/qBittorrent/config/qBittorrent.conf
+        cat << EOF >"$config_main"
 [LegalNotice]
 Accepted=true
 
@@ -213,13 +216,14 @@ Connection\PortRangeMin=45000
 Downloads\DiskWriteCacheSize=$Cache2
 Downloads\SavePath=/home/$username/qbittorrent/Downloads/
 Queueing\QueueingEnabled=false
-WebUI\Password_PBKDF2=@ByteArray($PBKDF2password)
+WebUI\Password_PBKDF2="@ByteArray($PBKDF2password)"
 WebUI\Password_ha1=@ByteArray($md5password)
 WebUI\Port=8080
 WebUI\Username=$username
 EOF
     rm -f $HOME/qb_password_gen
     fi
-    chown $username /home/$username/.config/qBittorrent/config/qBittorrent.conf
+    cp "$config_main" "$config_profile"
+    chown $username "$config_main" "$config_profile"
     systemctl start qbittorrent-nox@$username
 }
