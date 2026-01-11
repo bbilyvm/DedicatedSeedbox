@@ -1,5 +1,5 @@
 ﻿# Seedbox Installation Script
-### !!! 这些脚本仅可在新安装的Debian 10/11上运行 
+### !!! 这些脚本仅可在新安装的Debian 10/11/12/13上运行 
 本脚本不保证能提高盒子性能，并且可能会导致您的服务器直接卡死。编写此脚本的菜鸡对编程一窍不通，并且可能在脚本里埋下了很多坑，请谨慎使用
 
 魔改BBR会增加数据包的重传率，做成带宽浪费。在10Gbps网络上，开销大约是您真实上传量的30％，而在1Gbps上大约是10％。
@@ -7,11 +7,11 @@
 我没有时间管理此脚本，有什么问题请自己解决啦~
 ## 用法
 ### Install.sh
-`bash <(wget -qO- https://raw.githubusercontent.com/jerry048/Dedicated-Seedbox/main/Install.sh) <用户名称> <用户密码> <缓存大小(单位:GiB)>`
+`bash <(wget -qO- https://raw.githubusercontent.com/bbilyvm/DedicatedSeedbox/main/Install.sh) <用户名称> <用户密码> <缓存大小(单位:GiB)>`
 
 ### Tuning.sh 假如你已经安装了盒子环境 (有机会导致bug，请小心使用)
 
-`bash <(wget -qO- https://raw.githubusercontent.com/jerry048/Dedicated-Seedbox/main/Tune.sh)`
+`bash <(wget -qO- https://raw.githubusercontent.com/bbilyvm/DedicatedSeedbox/main/Tune.sh)`
 ## 功能
 ### Install.sh
 ###### 1. 安装盒子环境
