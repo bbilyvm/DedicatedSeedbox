@@ -161,7 +161,7 @@ User=$username
 Environment=HOME=/home/$username
 WorkingDirectory=/home/$username
 LimitNOFILE=infinity
-ExecStart=/usr/bin/qbittorrent-nox -d --profile=/home/$username/.config/qBittorrent
+ExecStart=/usr/bin/qbittorrent-nox -d --profile=/home/$username/.config
 ExecStop=/usr/bin/killall -w -s 9 /usr/bin/qbittorrent-nox
 Restart=on-failure
 TimeoutStopSec=20
