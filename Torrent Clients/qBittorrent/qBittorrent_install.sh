@@ -181,49 +181,52 @@ function qBittorrent_config {
     config_main="${config_base}/qBittorrent.conf"
     config_profile="${config_base}/config/qBittorrent.conf"
     mkdir -p "${config_base}/config" && chown -R $username "$config_base"
-    rm -f "$config_main" "$config_profile"
+    if [ ! -f "$config_profile" ] && [ ! -f "$config_main" ]; then
+        systemctl start qbittorrent-nox@$username
+        for _ in $(seq 1 30); do
+            [ -f "$config_profile" ] && break
+            [ -f "$config_main" ] && break
+            sleep 1
+        done
+        systemctl stop qbittorrent-nox@$username
+    fi
+
+    config_path="$config_profile"
+    if [ ! -f "$config_path" ] && [ -f "$config_main" ]; then
+        config_path="$config_main"
+    fi
+
+    function set_pref {
+        key="$1"
+        value="$2"
+        if grep -q "^${key}=" "$config_path"; then
+            sed -i "s#^${key}=.*#${key}=${value}#" "$config_path"
+        else
+            sed -i "/^\\[Preferences\\]/a ${key}=${value}" "$config_path"
+        fi
+    }
+
+    set_pref "Connection\\PortRangeMin" "45000"
+    set_pref "Downloads\\DiskWriteCacheSize" "$Cache2"
+    set_pref "Downloads\\SavePath" "/home/$username/qbittorrent/Downloads/"
+    set_pref "Queueing\\QueueingEnabled" "false"
+    set_pref "WebUI\\Port" "8080"
+    set_pref "WebUI\\Username" "$username"
+
     if [[ "${version}" =~ "4.1." ]]; then
         md5password=$(printf "%s:Web UI Access:%s" "$username" "$password" | md5sum | awk '{print $1}')
-        cat << EOF >"$config_main"
-[LegalNotice]
-Accepted=true
-
-[Network]
-Cookies=@Invalid()
-
-[Preferences]
-Connection\PortRangeMin=45000
-Downloads\DiskWriteCacheSize=$Cache2
-Downloads\SavePath=/home/$username/qbittorrent/Downloads/
-Queueing\QueueingEnabled=false
-WebUI\Password_ha1=@ByteArray($md5password)
-WebUI\Port=8080
-WebUI\Username=$username
-EOF
+        set_pref "WebUI\\Password_ha1" "@ByteArray($md5password)"
     elif [[ "${version}" =~ ^4\.2\.|^4\.3\.|^4\.4\.|^4\.5\.|^4\.6\.|^5\. ]]; then
         wget  https://raw.githubusercontent.com/bbilyvm/DedicatedSeedbox/main/Torrent%20Clients/qBittorrent/qb_password_gen && chmod +x $HOME/qb_password_gen
         PBKDF2password=$($HOME/qb_password_gen $password)
         md5password=$(printf "%s:Web UI Access:%s" "$username" "$password" | md5sum | awk '{print $1}')
-        cat << EOF >"$config_main"
-[LegalNotice]
-Accepted=true
-
-[Network]
-Cookies=@Invalid()
-
-[Preferences]
-Connection\PortRangeMin=45000
-Downloads\DiskWriteCacheSize=$Cache2
-Downloads\SavePath=/home/$username/qbittorrent/Downloads/
-Queueing\QueueingEnabled=false
-WebUI\Password_PBKDF2="@ByteArray($PBKDF2password)"
-WebUI\Password_ha1=@ByteArray($md5password)
-WebUI\Port=8080
-WebUI\Username=$username
-EOF
-    rm -f $HOME/qb_password_gen
+        set_pref "WebUI\\Password_PBKDF2" "\"@ByteArray($PBKDF2password)\""
+        set_pref "WebUI\\Password_ha1" "@ByteArray($md5password)"
+        rm -f $HOME/qb_password_gen
     fi
-    cp "$config_main" "$config_profile"
+
+    cp "$config_path" "$config_main"
+    cp "$config_path" "$config_profile"
     chown $username "$config_main" "$config_profile"
     systemctl start qbittorrent-nox@$username
 }
