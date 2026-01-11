@@ -11,6 +11,9 @@ if [ $(id -u) -ne 0 ]; then
     exit 1 
 fi
 
+export DEBIAN_FRONTEND=noninteractive
+export APT_OPTIONS="-o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confold"
+
 ## Check Linux Distro
 distro_codename="$(source /etc/os-release && printf "%s" "${VERSION_CODENAME}")"
 if [[ $distro_codename != buster ]] && [[ $distro_codename != bullseye ]] && [[ $distro_codename != bookworm ]] && [[ $distro_codename != trixie ]] ; then
@@ -70,9 +73,7 @@ tput sgr0; clear
 normal_1; echo "Start Installing Seedbox Environment"; warn_2
 source <(wget -qO- https://raw.githubusercontent.com/bbilyvm/DedicatedSeedbox/main/seedbox_installation.sh)
 Update
-Decision qBittorrent
-Decision Deluge
-Decision autoremove-torrents
+qBittorrent
 
 
 ## Tweaking
@@ -101,5 +102,4 @@ if [[ ! -z "$qbport" ]]; then
 else
     echo "qBittorrent $version did not start successfully. Run: systemctl status qbittorrent-nox@$username"
 fi
-[[ ! -z "$deport" ]] && echo "Deluge $Deluge_Ver is successfully installed, visit at $publicip:$dewebport"
 [[ ! -z "$bbrx" ]] && echo "Tweaked BBR is successfully installed, please reboot for it to take effect"
