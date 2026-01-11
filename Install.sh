@@ -70,7 +70,7 @@ tput sgr0; clear
 normal_1; echo "Start Installing Seedbox Environment"; warn_2
 source <(wget -qO- https://raw.githubusercontent.com/bbilyvm/DedicatedSeedbox/main/seedbox_installation.sh)
 Update
-Decision qBittorrent
+qBittorrent
 
 
 ## Tweaking
