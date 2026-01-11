@@ -10,33 +10,72 @@ function qBittorrent_download {
         wget -qO "$HOME/qbittorrent-nox" "$qb_base/$path/qbittorrent-nox" && chmod +x "$HOME/qbittorrent-nox"
     }
 
-    options=("qBittorrent 4.1.9 - libtorrent-1_1_14" "qBittorrent 4.1.9.1 - libtorrent-1_1_14" "qBittorrent 4.2.5 - libtorrent-v1.2.20" "qBittorrent 4.3.3 - libtorrent-v1.2.13" "qBittorrent 4.3.4.1 - libtorrent-v1.2.13" "qBittorrent 4.3.5 - libtorrent-v1.2.13" "qBittorrent 4.3.6 - libtorrent-v1.2.14" "qBittorrent 4.3.7 - libtorrent-v1.2.14" "qBittorrent 4.3.8 - libtorrent-v1.2.14" "qBittorrent 4.3.9 - libtorrent-v1.2.15" "qBittorrent 4.3.9 - libtorrent-v1.2.20" "qBittorrent 4.4.5 - libtorrent-v1.2.20" "qBittorrent 4.4.5 - libtorrent-v2.0.11" "qBittorrent 4.5.5 - libtorrent-v1.2.20" "qBittorrent 4.5.5 - libtorrent-v2.0.11" "qBittorrent 4.6.7 - libtorrent-v1.2.20" "qBittorrent 4.6.7 - libtorrent-v2.0.11" "qBittorrent 5.0.3 - libtorrent-v1.2.20" "qBittorrent 5.0.3 - libtorrent-v2.0.11" "qBittorrent 5.0.4 - libtorrent-v1.2.20" "qBittorrent 5.0.4 - libtorrent-v2.0.11" "qBittorrent 5.0.5 - libtorrent-v1.2.20" "qBittorrent 5.0.5 - libtorrent-v2.0.11" "qBittorrent 5.1.0 - libtorrent-v1.2.20" "qBittorrent 5.1.0 - libtorrent-v2.0.11" "qBittorrent 5.1.1 - libtorrent-v1.2.20" "qBittorrent 5.1.1 - libtorrent-v2.0.11" "qBittorrent 5.1.2 - libtorrent-v1.2.20" "qBittorrent 5.1.2 - libtorrent-v2.0.11" "qBittorrent 5.1.3 - libtorrent-v1.2.20" "qBittorrent 5.1.3 - libtorrent-v2.0.11" "qBittorrent 5.1.4 - libtorrent-v1.2.20" "qBittorrent 5.1.4 - libtorrent-v2.0.11")
+    options=("qBittorrent 4.3.8 - libtorrent-v1.2.14" "qbittorrent 4.3.9 - libtorrent-v1.2.14" "qBittorrent 4.3.9 - libtorrent-v1.2.15" "qBittorrent 4.3.9 - libtorrent-v1.2.20" "qbittorrent 4.3.9 - libtorrent-v2.0.4" "qbittorrent 4.3.9 - libtorrent-v2.0.5" "qBittorrent 4.4.5 - libtorrent-v1.2.20" "qBittorrent 4.4.5 - libtorrent-v2.0.11" "qBittorrent 4.5.5 - libtorrent-v1.2.20" "qBittorrent 4.5.5 - libtorrent-v2.0.11" "qbittorrent 4.6.5 - libtorrent-v1.2.19" "qbittorrent 4.6.5 - libtorrent-v2.0.10" "qbittorrent 4.6.7 - libtorrent-v1.2.19" "qbittorrent 4.6.7 - libtorrent-v2.0.10" "qBittorrent 4.6.7 - libtorrent-v1.2.20" "qBittorrent 4.6.7 - libtorrent-v2.0.11" "qBittorrent 5.0.3 - libtorrent-v1.2.20" "qBittorrent 5.0.3 - libtorrent-v2.0.11" "qbittorrent 5.0.4 - libtorrent-v1.2.20" "qbittorrent 5.0.4 - libtorrent-v2.0.11" "qbittorrent 5.0.5 - libtorrent-v1.2.20" "qbittorrent 5.0.5 - libtorrent-v2.0.11" "qbittorrent 5.1.0 - libtorrent-v1.2.20" "qbittorrent 5.1.0 - libtorrent-v2.0.11" "qbittorrent 5.1.1 - libtorrent-v1.2.20" "qbittorrent 5.1.1 - libtorrent-v2.0.11" "qbittorrent 5.1.2 - libtorrent-v1.2.20" "qbittorrent 5.1.2 - libtorrent-v2.0.11" "qbittorrent 5.1.3 - libtorrent-v1.2.20" "qbittorrent 5.1.3 - libtorrent-v2.0.11" "qbittorrent 5.1.4 - libtorrent-v1.2.20" "qbittorrent 5.1.4 - libtorrent-v2.0.11")
     select opt in "${options[@]}"
     do
         case $opt in
-            "qBittorrent 4.1.9 - libtorrent-1_1_14")
-                qBittorrent_fetch "4.1.9" "qBittorrent%204.1.9%20-%20libtorrent-1_1_14"; break
+            "qbittorrent 4.3.9 - libtorrent-v1.2.14")
+                qBittorrent_fetch "4.3.9" "qbittorrent%204.3.9%20-%20libtorrent-v1.2.14"; break
                 ;;
-            "qBittorrent 4.1.9.1 - libtorrent-1_1_14")
-                qBittorrent_fetch "4.1.9.1" "qBittorrent%204.1.9.1%20-%20libtorrent-1_1_14"; break
+            "qbittorrent 4.3.9 - libtorrent-v2.0.4")
+                qBittorrent_fetch "4.3.9" "qbittorrent%204.3.9%20-%20libtorrent-v2.0.4"; break
                 ;;
-            "qBittorrent 4.2.5 - libtorrent-v1.2.20")
-                qBittorrent_fetch "4.2.5" "qBittorrent%204.2.5%20-%20libtorrent-v1.2.20"; break
+            "qbittorrent 4.3.9 - libtorrent-v2.0.5")
+                qBittorrent_fetch "4.3.9" "qbittorrent%204.3.9%20-%20libtorrent-v2.0.5"; break
                 ;;
-            "qBittorrent 4.3.3 - libtorrent-v1.2.13")
-                qBittorrent_fetch "4.3.3" "qBittorrent%204.3.3%20-%20libtorrent-v1.2.13"; break
+            "qbittorrent 4.6.5 - libtorrent-v1.2.19")
+                qBittorrent_fetch "4.6.5" "qbittorrent%204.6.5%20-%20libtorrent-v1.2.19"; break
                 ;;
-            "qBittorrent 4.3.4.1 - libtorrent-v1.2.13")
-                qBittorrent_fetch "4.3.4.1" "qBittorrent%204.3.4.1%20-%20libtorrent-v1.2.13"; break
+            "qbittorrent 4.6.5 - libtorrent-v2.0.10")
+                qBittorrent_fetch "4.6.5" "qbittorrent%204.6.5%20-%20libtorrent-v2.0.10"; break
                 ;;
-            "qBittorrent 4.3.5 - libtorrent-v1.2.13")
-                qBittorrent_fetch "4.3.5" "qBittorrent%204.3.5%20-%20libtorrent-v1.2.13"; break
+            "qbittorrent 4.6.7 - libtorrent-v1.2.19")
+                qBittorrent_fetch "4.6.7" "qbittorrent%204.6.7%20-%20libtorrent-v1.2.19"; break
                 ;;
-            "qBittorrent 4.3.6 - libtorrent-v1.2.14")
-                qBittorrent_fetch "4.3.6" "qBittorrent%204.3.6%20-%20libtorrent-v1.2.14"; break
+            "qbittorrent 4.6.7 - libtorrent-v2.0.10")
+                qBittorrent_fetch "4.6.7" "qbittorrent%204.6.7%20-%20libtorrent-v2.0.10"; break
                 ;;
-            "qBittorrent 4.3.7 - libtorrent-v1.2.14")
-                qBittorrent_fetch "4.3.7" "qBittorrent%204.3.7%20-%20libtorrent-v1.2.14"; break
+            "qbittorrent 5.0.4 - libtorrent-v1.2.20")
+                qBittorrent_fetch "5.0.4" "qbittorrent%205.0.4%20-%20libtorrent-v1.2.20"; break
+                ;;
+            "qbittorrent 5.0.4 - libtorrent-v2.0.11")
+                qBittorrent_fetch "5.0.4" "qbittorrent%205.0.4%20-%20libtorrent-v2.0.11"; break
+                ;;
+            "qbittorrent 5.0.5 - libtorrent-v1.2.20")
+                qBittorrent_fetch "5.0.5" "qbittorrent%205.0.5%20-%20libtorrent-v1.2.20"; break
+                ;;
+            "qbittorrent 5.0.5 - libtorrent-v2.0.11")
+                qBittorrent_fetch "5.0.5" "qbittorrent%205.0.5%20-%20libtorrent-v2.0.11"; break
+                ;;
+            "qbittorrent 5.1.0 - libtorrent-v1.2.20")
+                qBittorrent_fetch "5.1.0" "qbittorrent%205.1.0%20-%20libtorrent-v1.2.20"; break
+                ;;
+            "qbittorrent 5.1.0 - libtorrent-v2.0.11")
+                qBittorrent_fetch "5.1.0" "qbittorrent%205.1.0%20-%20libtorrent-v2.0.11"; break
+                ;;
+            "qbittorrent 5.1.1 - libtorrent-v1.2.20")
+                qBittorrent_fetch "5.1.1" "qbittorrent%205.1.1%20-%20libtorrent-v1.2.20"; break
+                ;;
+            "qbittorrent 5.1.1 - libtorrent-v2.0.11")
+                qBittorrent_fetch "5.1.1" "qbittorrent%205.1.1%20-%20libtorrent-v2.0.11"; break
+                ;;
+            "qbittorrent 5.1.2 - libtorrent-v1.2.20")
+                qBittorrent_fetch "5.1.2" "qbittorrent%205.1.2%20-%20libtorrent-v1.2.20"; break
+                ;;
+            "qbittorrent 5.1.2 - libtorrent-v2.0.11")
+                qBittorrent_fetch "5.1.2" "qbittorrent%205.1.2%20-%20libtorrent-v2.0.11"; break
+                ;;
+            "qbittorrent 5.1.3 - libtorrent-v1.2.20")
+                qBittorrent_fetch "5.1.3" "qbittorrent%205.1.3%20-%20libtorrent-v1.2.20"; break
+                ;;
+            "qbittorrent 5.1.3 - libtorrent-v2.0.11")
+                qBittorrent_fetch "5.1.3" "qbittorrent%205.1.3%20-%20libtorrent-v2.0.11"; break
+                ;;
+            "qbittorrent 5.1.4 - libtorrent-v1.2.20")
+                qBittorrent_fetch "5.1.4" "qbittorrent%205.1.4%20-%20libtorrent-v1.2.20"; break
+                ;;
+            "qbittorrent 5.1.4 - libtorrent-v2.0.11")
+                qBittorrent_fetch "5.1.4" "qbittorrent%205.1.4%20-%20libtorrent-v2.0.11"; break
                 ;;
             "qBittorrent 4.3.8 - libtorrent-v1.2.14")
                 qBittorrent_fetch "4.3.8" "qBittorrent%204.3.8%20-%20libtorrent-v1.2.14"; break
@@ -70,48 +109,6 @@ function qBittorrent_download {
                 ;;
             "qBittorrent 5.0.3 - libtorrent-v2.0.11")
                 qBittorrent_fetch "5.0.3" "qBittorrent%205.0.3%20-%20libtorrent-v2.0.11"; break
-                ;;
-            "qBittorrent 5.0.4 - libtorrent-v1.2.20")
-                qBittorrent_fetch "5.0.4" "qbittorrent%205.0.4%20-%20libtorrent-v1.2.20"; break
-                ;;
-            "qBittorrent 5.0.4 - libtorrent-v2.0.11")
-                qBittorrent_fetch "5.0.4" "qbittorrent%205.0.4%20-%20libtorrent-v2.0.11"; break
-                ;;
-            "qBittorrent 5.0.5 - libtorrent-v1.2.20")
-                qBittorrent_fetch "5.0.5" "qbittorrent%205.0.5%20-%20libtorrent-v1.2.20"; break
-                ;;
-            "qBittorrent 5.0.5 - libtorrent-v2.0.11")
-                qBittorrent_fetch "5.0.5" "qbittorrent%205.0.5%20-%20libtorrent-v2.0.11"; break
-                ;;
-            "qBittorrent 5.1.0 - libtorrent-v1.2.20")
-                qBittorrent_fetch "5.1.0" "qbittorrent%205.1.0%20-%20libtorrent-v1.2.20"; break
-                ;;
-            "qBittorrent 5.1.0 - libtorrent-v2.0.11")
-                qBittorrent_fetch "5.1.0" "qbittorrent%205.1.0%20-%20libtorrent-v2.0.11"; break
-                ;;
-            "qBittorrent 5.1.1 - libtorrent-v1.2.20")
-                qBittorrent_fetch "5.1.1" "qbittorrent%205.1.1%20-%20libtorrent-v1.2.20"; break
-                ;;
-            "qBittorrent 5.1.1 - libtorrent-v2.0.11")
-                qBittorrent_fetch "5.1.1" "qbittorrent%205.1.1%20-%20libtorrent-v2.0.11"; break
-                ;;
-            "qBittorrent 5.1.2 - libtorrent-v1.2.20")
-                qBittorrent_fetch "5.1.2" "qbittorrent%205.1.2%20-%20libtorrent-v1.2.20"; break
-                ;;
-            "qBittorrent 5.1.2 - libtorrent-v2.0.11")
-                qBittorrent_fetch "5.1.2" "qbittorrent%205.1.2%20-%20libtorrent-v2.0.11"; break
-                ;;
-            "qBittorrent 5.1.3 - libtorrent-v1.2.20")
-                qBittorrent_fetch "5.1.3" "qbittorrent%205.1.3%20-%20libtorrent-v1.2.20"; break
-                ;;
-            "qBittorrent 5.1.3 - libtorrent-v2.0.11")
-                qBittorrent_fetch "5.1.3" "qbittorrent%205.1.3%20-%20libtorrent-v2.0.11"; break
-                ;;
-            "qBittorrent 5.1.4 - libtorrent-v1.2.20")
-                qBittorrent_fetch "5.1.4" "qbittorrent%205.1.4%20-%20libtorrent-v1.2.20"; break
-                ;;
-            "qBittorrent 5.1.4 - libtorrent-v2.0.11")
-                qBittorrent_fetch "5.1.4" "qbittorrent%205.1.4%20-%20libtorrent-v2.0.11"; break
                 ;;
             *) warn_1; echo "Please choose a valid version"; normal_3;;
         esac
@@ -164,7 +161,7 @@ User=$username
 Environment=HOME=/home/$username
 WorkingDirectory=/home/$username
 LimitNOFILE=infinity
-ExecStart=/usr/bin/qbittorrent-nox -d --profile=/home/$username/.config/qBittorrent
+ExecStart=/usr/bin/qbittorrent-nox -d --profile=/home/$username/.config
 ExecStop=/usr/bin/killall -w -s 9 /usr/bin/qbittorrent-nox
 Restart=on-failure
 TimeoutStopSec=20
@@ -176,14 +173,15 @@ EOF
     mkdir -p /home/$username/qbittorrent/Downloads && chown $username /home/$username/qbittorrent/Downloads
     mkdir -p /home/$username/.config/qBittorrent && chown $username /home/$username/.config/qBittorrent
     systemctl enable qbittorrent-nox@$username
-    systemctl start qbittorrent-nox@$username
 }
 
 function qBittorrent_config {
     systemctl stop qbittorrent-nox@$username
+    mkdir -p /home/$username/.config/qBittorrent/config && chown -R $username /home/$username/.config/qBittorrent
+    rm -f /home/$username/.config/qBittorrent/qBittorrent.conf /home/$username/.config/qBittorrent/config/qBittorrent.conf
     if [[ "${version}" =~ "4.1." ]]; then
-        md5password=$(echo -n $password | md5sum | awk '{print $1}')
-        cat << EOF >/home/$username/.config/qBittorrent/qBittorrent.conf
+        md5password=$(printf "%s:Web UI Access:%s" "$username" "$password" | md5sum | awk '{print $1}')
+        cat << EOF >/home/$username/.config/qBittorrent/config/qBittorrent.conf
 [LegalNotice]
 Accepted=true
 
@@ -199,14 +197,15 @@ WebUI\Password_ha1=@ByteArray($md5password)
 WebUI\Port=8080
 WebUI\Username=$username
 EOF
-    elif [[ "${version}" =~ "4.2."|"4.3."|"4.4." ]]; then
+    elif [[ "${version}" =~ ^4\.2\.|^4\.3\.|^4\.4\.|^4\.5\.|^4\.6\.|^5\. ]]; then
         wget  https://raw.githubusercontent.com/bbilyvm/DedicatedSeedbox/main/Torrent%20Clients/qBittorrent/qb_password_gen && chmod +x $HOME/qb_password_gen
         PBKDF2password=$($HOME/qb_password_gen $password)
-        cat << EOF >/home/$username/.config/qBittorrent/qBittorrent.conf
+        md5password=$(printf "%s:Web UI Access:%s" "$username" "$password" | md5sum | awk '{print $1}')
+        cat << EOF >/home/$username/.config/qBittorrent/config/qBittorrent.conf
 [LegalNotice]
 Accepted=true
 
-[Network]+
+[Network]
 Cookies=@Invalid()
 
 [Preferences]
@@ -214,11 +213,13 @@ Connection\PortRangeMin=45000
 Downloads\DiskWriteCacheSize=$Cache2
 Downloads\SavePath=/home/$username/qbittorrent/Downloads/
 Queueing\QueueingEnabled=false
-WebUI\Password_PBKDF2="@ByteArray($PBKDF2password)"
+WebUI\Password_PBKDF2=@ByteArray($PBKDF2password)
+WebUI\Password_ha1=@ByteArray($md5password)
 WebUI\Port=8080
 WebUI\Username=$username
 EOF
-    rm qb_password_gen
+    rm -f $HOME/qb_password_gen
     fi
+    chown $username /home/$username/.config/qBittorrent/config/qBittorrent.conf
     systemctl start qbittorrent-nox@$username
 }
